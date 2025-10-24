@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<!-- <html xmlns:th="http://www.thymeleaf.org"> -->
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>My Blog</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <header>
+        <h1>Welcome to My Blog</h1>
+		<nav style="background-color: #f2f2f2; padding: 10px;">
+			<span sec:authorize="isAuthenticated()"> <a
+				th:href="@{/users/profile}">Profile</a> | <a th:href="@{/posts/new}">NewPost</a>
+				| <a th:href="@{/logout}">Logout</a>
+				| <a th:href="@{/}">Main</a>
+			</span>
+		</nav>
+        <hr/>
+    </header>
+    <main>
+        <div th:if="${#lists.isEmpty(posts)}">
+            <p>No blog posts yet.</p>
+        </div>
+        <div th:each="post : ${posts}" >
+            <h2><a th:href="@{'/posts/' + ${post.postId}}" th:text="${post.title}">Post Title</a></h2>
+            <p th:text="${post.content.length() > 150 ? post.content.substring(0, 150) + '...' : post.content}"></p>
+           
+            <small th:text="${'Author: ' + post.authorName + ' Published: ' + #temporals.format(post.publishedOn, 'yyyy-MM-dd')}"></small>
+<!--                 yyyy-MM-dd HH:mm:ss -->
+            
+            <div th:if="${post.tags != null and !post.tags.isEmpty()}" class="post-tags">
+                <span th:each="tag : ${post.tags.split(', ')}" class="tag-badge" >
+                <a th:href="@{/tags/{name}(name=${tag})}" th:text="${tag}">Tag</a>></span>
+            </div>
+            <a th:href="@{'/posts/' + ${post.postId}}">Read more</a>
+            <hr/>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}"></span> My Blog</p>
+    </footer>
+</body>
+</html> 

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Author profile</title>
+</head>
+<body>
+	<p th:text="'id: ' + ${author.id()}" />
+	<p th:text="${author.username()}" />
+	<p th:text="${author.email()}" />
+	<p th:text="'role: ' + ${author.role()}" />
+	<a th:href= "@{/admin/users/{id}/edit (id=${author.id()})}" th:text= "'Edit: ' + ${author.username()}"></a>
+	<br><hr>
+	<form th:action="@{/admin/users/{id}/delete (id=${author.id()})}"
+		th:method="POST">
+		<input type="submit" value="Delete author and all his blogs">
+	</form>
+	<br>
+	<form th:action="@{/logout}" method="post">
+		<button type="submit">Logout</button>
+	</form>
+	<br><hr>
+	<a th:href= "@{/admin/tags}">Manage Tags</a>
+</body>
+</html>

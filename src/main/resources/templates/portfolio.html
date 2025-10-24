@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Martins — Blog App</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            background: radial-gradient(circle at top left, #0d6efd, #0f172a);
+            font-family: system-ui, sans-serif;
+            color: #e6eef8;
+            text-align: center;
+        }
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            animation: pulse 3s infinite ease-in-out;
+        }
+        p {
+            font-size: 1.1rem;
+            color: #b0b9c6;
+            margin-bottom: 2rem;
+        }
+        a {
+            display: inline-block;
+            padding: 14px 36px;
+            font-size: 1.2rem;
+            border-radius: 10px;
+            text-decoration: none;
+            color: white;
+            background: #0d6efd;
+            box-shadow: 0 4px 12px rgba(13, 110, 253, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        a:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 16px rgba(13, 110, 253, 0.6);
+        }
+        footer {
+            position: absolute;
+            bottom: 1rem;
+            width: 100%;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #93a1b3;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.06); }
+        }
+    </style>
+</head>
+<body>
+<h1>Martins</h1>
+<p>Full-Stack Java Developer — Spring Boot · Docker · AWS</p>
+<a href="/blog">Visit Blog App</a>
+
+<footer>
+    &copy; <span id="year"></span> Martins. All rights reserved.
+</footer>
+
+<script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

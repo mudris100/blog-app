@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+ <link rel="stylesheet" th:href="@{/css/styles.css}">
+<meta charset="UTF-8">
+<title>Profile</title>
+</head>
+<body>
+	<div class="navbar">
+		<a href="/posts/new">Create post</a>
+		<a href="/posts">My Published Posts</a>
+		<a href="/blog">Blog Posts</a>
+		<div class="right">
+			<span th:text="'Welcome, ' + ${user.username}"></span>
+			<a href="/logout">Logout</a>
+		</div>
+	</div>
+
+	<h1>My Blog Posts:</h1>
+
+	<div th:each="post : ${posts}">
+		<div class="blog-post">
+			<strong th:text="${post.title}">Post Title</strong> - <span
+				th:text="${post.publishedOn}">Date</span>
+			<span th:if="${post.status.name() == 'DRAFT'}" class="status-badge draft">Draft</span>
+			<span th:if="${post.status.name() == 'PUBLISHED'}" class="status-badge published">Published</span>
+<!-- 			<p th:text="${post.content}" /> -->
+
+				<pre th:text="${post.content}"></pre>
+			
+			<div class="button-group">
+			<a th:href="@{/posts/{id}/edit(id=${post.postId})}" class="btn edit">Edit</a>
+			<form th:action="@{/posts/{id}/delete(id=${post.postId})}" method="post" style="display:inline;">
+				<button type="submit" class="btn delete">Delete</button>
+			</form>
+			<form th:if="${post.status.name() == 'DRAFT'}" th:action="@{/posts/{id}/publish(id=${post.postId})}" method="post" style="display:inline;">
+				<button type="submit" class="btn publish">Publish</button>
+			</form>
+			</div>
+		</div>
+	</div>
+		
+</body>
+</html>

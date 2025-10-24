@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h2>Blog Authors</h2>
+	<div th:each="user : ${users}">
+		<p th:text="${user.username + ': blog posts: ' + user.posts.size}"  />
+	</div>
+</body>
+</html>

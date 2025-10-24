@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Authors</title>
+</head>
+<body>
+	<h2>Blog Authors</h2>
+	<div th:each="user : ${users}">
+	<a th:href = "@{/admin/users/{id} (id=${user.id()})}"
+	th:text="${user.username() + ': ' + user.email()}">user</a>	
+	</div>
+	<br><hr>
+	<a th:href= "@{/admin/tags}">Manage Tags</a>
+</body>
+</html>

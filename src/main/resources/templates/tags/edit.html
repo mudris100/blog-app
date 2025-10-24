@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Tag</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <div class="container">
+        <h1>Edit Tag</h1>
+        
+        <div class="navbar">
+            <a th:href="@{/admin/tags}">Back to Tags</a>
+            <div class="right">
+                <a th:href="@{/logout}">Logout</a>
+            </div>
+        </div>
+
+        <form th:action="@{/admin/tags/{id}/edit(id=${tag.id})}" th:object="${tag}" method="post">
+            <div class="form-group">
+                <label for="name">Tag Name:</label>
+                <input type="text" th:field="*{name}" placeholder="Enter tag name" required th:attr="minlength=2, maxlength=50"/>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit">Update Tag</button>
+                <a th:href="@{/admin/tags}" class="btn">Cancel</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html> 

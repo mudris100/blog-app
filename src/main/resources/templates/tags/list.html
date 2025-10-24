@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tag Management</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <div class="container">
+        <h1>Tag Management</h1>
+        
+        <div class="navbar">
+            <a th:href="@{/admin/tags/new}">Create New Tag</a>
+            <a th:href="@{/admin/users}">User Management</a>
+            <div class="right">
+                <a th:href="@{/logout}">Logout</a>
+            </div>
+        </div>
+
+        <div th:if="${#lists.isEmpty(tags)}">
+            <p>No tags found.</p>
+        </div>
+        
+        <div th:if="${!#lists.isEmpty(tags)}">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="tag : ${tags}">
+                        <td th:text="${tag.id}"></td>
+                        <td th:text="${tag.name}"></td>
+                        <td>
+                            <a th:href="@{/admin/tags/{id}/edit(id=${tag.id})}" class="btn edit">Edit</a>
+                            <form th:action="@{/admin/tags/{id}/delete(id=${tag.id})}" method="post" style="display:inline;">
+                                <button type="submit" class="btn delete" onclick="return confirm('Are you sure?')">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html> 

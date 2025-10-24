@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="stylesheet" th:href="@{/css/styles.css}">
+<meta charset="UTF-8">
+<title>Update</title>
+</head>
+<body>
+
+	<h1>Edit your blog post</h1>
+	<div class="container">
+	<form th:action="@{/posts/{id}/edit(id=${post.postId})}" method="post" th:object="${post}">
+		<div class="form-group">
+			<label>Title: <input type="text" th:field="*{title}" required  th:attr="minlength=3"/> </label> 
+			<label>Content: <textarea th:field="*{content}"></textarea> </label>
+			<label>Status: 
+				<select th:field="*{status}">
+					<option value="DRAFT">Draft</option>
+					<option value="PUBLISHED">Published</option>
+				</select>
+			</label>
+			<label>Tags: 
+				<input type="text" th:field="*{tags}" 
+					placeholder="e.g., Java, Spring Boot, Web Development">
+			</label>		
+		</div>
+		
+		<button type="submit" class="btn edit">Submit</button>
+		
+	</form>
+	</div>
+</body>
+</html>

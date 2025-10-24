@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${post.title}">Post Details</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <div class="container">
+        <h1 th:text="${post.title}">Post Title</h1>
+        <strong th:text="${'Author: ' + post.author.username}">Author</strong>
+        <pre th:text="${post.content}">Post Content</pre>
+        <p><strong>Created on:</strong> <span th:text="${#temporals.format(post.publishedOn, 'yyyy-MM-dd')}"></span></p>
+        <p>
+        <span th:if="${post.status.name() == 'DRAFT'}" class="status-badge draft">Draft</span>
+        <span th:if="${post.status.name() == 'PUBLISHED'}" class="status-badge published">Published</span>
+        </p>
+        <hr/>
+        <h2>Comments</h2>
+        <div th:if="${#lists.isEmpty(comments)}">
+            <p>No comments yet.</p>
+        </div>
+        <ul th:if="${!#lists.isEmpty(comments)}">
+            <li th:each="comment : ${comments}">
+                <strong th:text="${comment.author}">Author</strong>:
+                <span th:text="${comment.content}">Comment content</span>
+			<!-- ternary operator inline -->
+				<small
+				th:text="${comment.updatedAt != null 
+    ? '(Updated at: ' + #temporals.format(comment.updatedAt, 'yyyy-MM-dd HH:mm' + ')') 
+    : '(Created at: ' + #temporals.format(comment.createdAt, 'yyyy-MM-dd HH:mm' + ')')}"
+				th:style="${comment.updatedAt != null ? 'color: orange;' : 'color: green;'}">
+			</small>
+			<!-- Show edit/delete only to the author -->
+   				<div
+					th:if="${currentUsername != null and currentUsername == comment.author}">
+					<a th:href="@{'/comments/' + ${comment.id} + '/edit'}">Edit</a> | <a
+						th:href="@{'/comments/' + ${comment.id} + '/delete'}"
+						onclick="return confirm('Are you sure you want to delete this comment?');">Delete</a>
+				</div>
+			</li>
+        </ul>
+        <hr/>
+        <h3>Add a Comment</h3>
+        <form th:action="@{'/posts/' + ${post.id} + '/comment'}" th:object="${comment}" method="post">
+            <div class="form-group">
+                <label for="content">Comment:</label>
+                <textarea id="content" th:field="*{content}" required></textarea>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+        <a th:href="@{/posts}">Back to Posts</a>
+    </div>
+</body>
+</html> 

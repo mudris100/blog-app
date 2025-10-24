@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="stylesheet" th:href="@{/css/styles.css}">
+<meta charset="UTF-8">
+<title>Create</title>
+</head>
+<body>
+	<div class="container">
+		<h1>Create New Blog Post</h1>
+
+		<form th:action="@{/posts}" th:object="${post}" method="post">
+			<div class="form-group">
+				<label for="title">Blog Title:</label>
+				<input type="text" th:field="*{title}" placeholder="Title" required th:attr="maxlength=100"/>
+			</div>
+
+			<div class="form-group">
+				<label for="content">Blog Content:</label>
+				<textarea th:field="*{content}" placeholder="Content"  th:attr="maxlength=3000"></textarea>
+			</div>
+
+			<div class="form-group">
+				<label for="status">Status:</label>
+				<select th:field="*{status}">
+					<option value="DRAFT">Draft</option>
+					<option value="PUBLISHED">Published</option>
+				</select>
+			</div>
+
+			<div class="form-group">
+				<label for="tags">Tags:</label>
+				<input type="text" id="tags" th:field="*{tags}"
+					placeholder="e.g., Java, Spring Boot, Web Development" th:attr="maxlength=100">
+				<small class="form-text text-muted">Enter tags separated by commas. Existing tags: 
+					<span th:each="tag, iterStat : ${availableTags}" th:text="${tag.name + (iterStat.last ? '' : ', ')}"></span>
+				</small>
+			</div>
+
+			<div class="form-actions">
+				<button type="submit">Publish Blog Post</button>
+			</div>
+		</form>
+	</div>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>My Blog</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+
+<body>
+	<header>
+		<h1 th:text= "${'All published Posts with tag: ' + tag}"> </h1>
+		<nav style="background-color: #f2f2f2; padding: 10px;">
+			<span sec:authorize="isAuthenticated()"> <a
+				th:href="@{/users/profile}">Profile</a> | <a th:href="@{/posts/new}">NewPost</a>
+				| <a th:href="@{/logout}">Logout</a>
+				| <a th:href="@{/}">Main</a>
+			</span>
+		</nav>
+		<hr />
+	</header>
+	<main>
+        <div th:if="${#lists.isEmpty(posts)}">
+            <p>No blog posts yet.</p>
+        </div>
+        <div th:each="post : ${posts}" class="post-summary">
+            <h2><a th:href="@{'/posts/' + ${post.postId}}" th:text="${post.title}">Post Title</a></h2>
+            <p th:text="${post.content.length() > 150 ? post.content.substring(0, 150) + '...' : post.content}"></p>
+            <p>
+                <em th:text="${post.publishedOn}"></em>
+            </p>
+           <span  class="tag-badge" th:text="${tag}"></span>
+            <a th:href="@{'/posts/' + ${post.postId}}">Read more</a>
+            <hr/>
+        </div>
+    </main>
+</body>
+</html>
