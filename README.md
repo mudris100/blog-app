@@ -124,6 +124,13 @@ OAuth2 is **disabled by default**. To enable it:
 
 The `Dockerfile` expects a **prebuilt JAR** in `/target`.
 
+**Prerequisites**
+
+- **JDK 21** (a full JDK, not just a JRE, since the build needs `javac`). Check with `javac -version`.
+    - Ubuntu/Debian: `sudo apt install openjdk-21-jdk-headless`
+    - Fedora: `sudo dnf install java-21-openjdk-devel`
+- Docker with the Compose plugin
+
 **1. Build the JAR**
 
 ```bash
